@@ -27,6 +27,7 @@ import androidx.privacysandbox.tools.core.model.Method
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.wetter.screens.MainScreen
 import com.example.wetter.ui.theme.WetterTheme
 import java.util.Queue
 
@@ -42,80 +43,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("London", this)
+                    MainScreen()
 
                 }
             }
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, context: Context) {
-
-    val state = remember{
-        mutableStateOf("Unknown")
-    }
-    Column(modifier = Modifier.fillMaxSize()
-    ) {
-        Box(modifier = Modifier
-            .fillMaxHeight(0.5f)
-            .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ){
-            Text(
-                text = "Температура в  $name = ${state.value}",
-
-            )
-
-        }
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-            contentAlignment = Alignment.BottomCenter
-        ){
-            Button(onClick = {
-                getResult(name, state, context)
-
-            }, modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
-            ) {
-                Text(
-                    text = "Refresh",
-                )
-
-            }
-
-
-        }
-
-    }
-}
-
-private fun getResult(city: String, state: MutableState<String>, context: Context){
-
-    val url = "http://api.weatherapi.com/v1/current.json" +
-            "?key=$API_KEY&" +
-            "q=$city" +
-            "&aqi=no"
-
-    val queue = Volley.newRequestQueue(context)
-    val stringRequest = StringRequest(
-        Request.Method.GET,
-        url,
-
-        {
-            response ->
-            state.value = response
-            Log.d("MyLog", "response $response")
-        },
-        {
-            error ->
-            Log.d("MyLog", "Err $error")
-        }
-    )
-    queue.add(stringRequest)
-
-}
-
