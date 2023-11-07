@@ -38,7 +38,7 @@ fun MainScreen() {
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant,
             ),
-            //elevation = 0.dp
+            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
         ) {
 
         }
